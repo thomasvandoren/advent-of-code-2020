@@ -11,7 +11,7 @@ def cli(f):
     max_id = 0
     all_seats = [False for _ in range(128*8)]
     for bsp in bsps:
-        cur_id, row, col = _seat_id(bsp)
+        cur_id = _seat_id(bsp)
         all_seats[cur_id] = True
         max_id = max(cur_id, max_id)
     click.echo(f'[part1] highest seat id = {max_id}')
@@ -31,10 +31,8 @@ def cli(f):
     click.echo(f'[part2] my seat id = {my_seat_id}')
 
 
-def _seat_id(bsp: str) -> typing.Tuple[int, int, int]:
-    row = int(bsp[:7].replace('F', '0').replace('B', '1'), 2)
-    col = int(bsp[7:].replace('L', '0').replace('R', '1'), 2)
-    return row * 8 + col, row, col
+def _seat_id(bsp: str) -> int:
+    return int(bsp.replace('F', '0').replace('B', '1').replace('L', '0').replace('R', '1'), 2)
 
 
 if __name__ == '__main__':
